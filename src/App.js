@@ -1,20 +1,50 @@
-import React from 'react'
-import Header from './components/header'
-import Aside from './components/aside'
-import Posts from './components/posts'
+import React, { Component } from 'react'
+import UserContext from './Context'
 
-import './App.css';
+class App extends Component {
+    constructor(props) {
+        super(props)
 
-const App = () => {
-  return (
-    <div className= "app">
-      <Header /> 
-      <div className="container">
-        < Aside />
-        <Posts />
-      </div>
-    </div>
-  );
+        this.state = {
+            loggedIn: false,
+            user: null
+        }
+    }
+
+    logIn = (user) => {
+    this.setState({
+        loggedIn: true,
+        user
+    })
+}
+    logOut = () => {
+        this.setState({
+            loggedIn: false,
+            user: null
+        })
+    }
+
+    render() {
+        const {
+            loggedIn,
+            user
+        } = this.state
+
+        return (
+            <UserContext.Provider value={{
+                loggedIn,
+                user,
+                logIn: this.logIn,
+                logOut: this.logOut
+
+            }}>
+
+                {this.props.children}
+            </UserContext.Provider>
+
+
+        )
+    }
 }
 
-export default App;
+export default App
