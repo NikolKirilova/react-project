@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styles from './index.module.css'
-import Post from '../posts'
+import Post from '../post' 
+ 
 
 
 
@@ -15,7 +16,8 @@ class Posts extends Component {
 
 
     getPosts = async () => {
-        const promise = await fetch('http://localhost:9999/api/origami')
+        const { length } = this.props
+        const promise = await fetch(`http://localhost:9999/api/origami?length=${length}`)
         const posts = await promise.json()
 
         this.setState({
@@ -26,9 +28,9 @@ class Posts extends Component {
     renderPosts() {
         const { posts } = this.state
 
-        return posts.map(post => {
+        return posts.map((post,index) => {
             return (
-            <Post key={post._id} {...post} />
+            <Post key={post._id} index={index} {...post} />
             )
         })
     }
@@ -38,25 +40,15 @@ class Posts extends Component {
     }
 
     render() {
-      
-
         return (
-            <div className={styles.container}>
-                <h1 className={styles.title}>Posts</h1>
+         
                 <div className={styles["origamis-wrapper"]}>
-                    {this.renderPosts()}
-
-                </div>
+                    {this.renderPosts()}            
 
             </div>
 
         )
-
-
-
     }
-
-
 }
 
 export default Posts

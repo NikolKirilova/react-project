@@ -1,12 +1,14 @@
 import styles from './index.module.css'
 
+import image from '../../images/blue-origami-bird.png'
 
-const Post = ({description, author}) => {
+const Post = ({description, author,index}) => {
 
     return(
         <div className={styles.container}>
+            <img className={styles.image} src={image} />
             <p className={styles.description}>
-
+            <span>{index}-</span>
         {description}
             </p>
             <div>
